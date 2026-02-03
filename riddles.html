@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>חידות 🧩</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="header">
+      <a class="btn soft" href="index.html">⬅ חזרה</a>
+      <div class="badge">משחק 3/3</div>
+    </div>
+
+    <h1>3 חידות קטנות 🧩</h1>
+    <p>עני, תבדקי, ובסוף זה פותח את הסוף הגדול.</p>
+
+    <div class="grid">
+      <div class="panel col-12">
+        <b>חידה 1</b>
+        <div class="note">אני עולה אבל לא יורד, אני יכול להימדד אבל אי אפשר לעצור אותי. מה אני?</div>
+        <div style="margin-top:10px;">
+          <input id="a1" placeholder="התשובה שלך..."/>
+          <div class="nav" style="margin-top:10px;">
+            <button class="btn soft" onclick="check(1)">בדיקה ✅</button>
+            <button class="btn secondary" onclick="hint(1)">רמז 💡</button>
+          </div>
+          <div class="toast" id="m1"></div>
+        </div>
+      </div>
+
+      <div class="panel col-12">
+        <b>חידה 2</b>
+        <div class="note">יש לי מפתחות אבל אין לי דלתות. אני עושה מוזיקה אבל אין לי פה. מה אני?</div>
+        <div style="margin-top:10px;">
+          <input id="a2" placeholder="התשובה שלך..."/>
+          <div class="nav" style="margin-top:10px;">
+            <button class="btn soft" onclick="check(2)">בדיקה ✅</button>
+            <button class="btn secondary" onclick="hint(2)">רמז 💡</button>
+          </div>
+          <div class="toast" id="m2"></div>
+        </div>
+      </div>
+
+      <div class="panel col-12">
+        <b>חידה 3</b>
+        <div class="note">אני הדבר הכי חזק בעולם… אבל כשאומרים אותי – אני נעלם. מה אני?</div>
+        <div style="margin-top:10px;">
+          <input id="a3" placeholder="התשובה שלך..."/>
+          <div class="nav" style="margin-top:10px;">
+            <button class="btn soft" onclick="check(3)">בדיקה ✅</button>
+            <button class="btn secondary" onclick="hint(3)">רמז 💡</button>
+          </div>
+          <div class="toast" id="m3"></div>
+        </div>
+      </div>
+
+      <div class="panel col-12">
+        <div class="kpi">
+          <span>סטטוס</span>
+          <b id="status">0/3</b>
+        </div>
+        <div class="nav" style="margin-top:12px;">
+          <a class="btn primary" href="final.html">לסוף הגדול 🎁</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // English comments
+  const answers = {
+    1: ["זמן","הזמן","time"],
+    2: ["פסנתר","קלידים","piano","keyboard"],
+    3: ["שקט","שתיקה","silence","quiet"]
+  };
+
+  const hints = {
+    1: "רמז: זה תמיד ממשיך…",
+    2: "רמז: מנגנים עליו עם ידיים.",
+    3: "רמז: אם תדברי אותו – הוא כבר לא קיים."
+  };
+
+  const done = {1:false,2:false,3:false};
+
+  function norm(s){
+    return (s||"").trim().toLowerCase().replace(/\s+/g,"");
+  }
+
+  function check(n){
+    const val = document.getElementById("a"+n).value;
+    const ok = answers[n].some(a => norm(a) === norm(val));
+    const m = document.getElementById("m"+n);
+
+    if(ok){
+      done[n]=true;
+      m.textContent = "✅ נכון! יפההה";
+      updateStatus();
+    }else{
+      m.textContent = "🙂 כמעט… נסי עוד פעם";
+    }
+  }
+
+  function hint(n){
+    document.getElementById("m"+n).textContent = "💡 " + hints[n];
+  }
+
+  function updateStatus(){
+    const count = Object.values(done).filter(Boolean).length;
+    document.getElementById("status").textContent = `${count}/3`;
+
+    if(count === 3){
+      localStorage.setItem("val_riddles_done","1");
+      document.getElementById("status").textContent = "3/3 ✅ נפתח!";
+    }
+  }
+
+  // hearts
+  const card = document.getElementById("card");
+  for(let i=0;i<10;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.style.left = Math.random()*100 + "%";
+    h.style.top  = Math.random()*100 + "%";
+    h.style.transform = `rotate(45deg) scale(${0.8 + Math.random()*1.6})`;
+    card.appendChild(h);
+  }
+</script>
+</body>
+</html>
