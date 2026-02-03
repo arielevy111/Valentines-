@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>מחמאות מהלב 💗</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="header">
+      <a class="btn soft" href="index.html">⬅ חזרה</a>
+      <div class="badge">דף מחמאות</div>
+    </div>
+
+    <h1>{{HER_NAME}} את לא מבינה כמה את יפה</h1>
+    <p>לחצי על הכפתורים ותראי מה אני באמת חושב עלייך.</p>
+
+    <div class="grid">
+      <div class="panel col-12">
+        <div class="nav">
+          <button class="btn primary" id="rand">מחמאה אקראית ✨</button>
+          <button class="btn secondary" id="sweet">משפט מתוק 🍯</button>
+          <button class="btn soft" id="deep">משהו אמיתי 🫶</button>
+        </div>
+
+        <div class="hr"></div>
+        <div class="toast" id="out">⬅️ תתחילי ללחוץ 🙂</div>
+        <div class="small" style="margin-top:10px;">*את יכולה לשנות את הטקסטים בקוד אם בא לך שיהיה יותר אישי.</div>
+      </div>
+
+      <div class="panel col-12">
+        <b>בקטנה: מה לשנות כדי שזה יהיה “שלכם”?</b>
+        <div class="note" style="margin-top:6px;">
+          חפשי בקוד את המשפטים ושימי: רגעים שלכם, בדיחות פרטיות, תכונה שהיא הכי אוהבת בעצמה, וכו׳.
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // English comments
+  const out = document.getElementById("out");
+
+  const compliments = [
+    "יש לך יופי שמרגיע. כזה שגורם לי להרגיש בבית.",
+    "החיוך שלך זה הדבר הכי ממכר בעולם.",
+    "את יפה מבחוץ… אבל הקטע הוא שאת עוד יותר יפה מבפנים.",
+    "את גורמת לי לרצות להיות הגרסה הכי טובה של עצמי.",
+    "אני מסתכל עלייך וחושב: איך זכיתי?",
+    "יש בך משהו נקי, אמיתי, נדיר. ואני רואה את זה."
+  ];
+
+  const sweet = [
+    "אם הייתי יכול לבחור שוב—הייתי בוחר בך עוד פעם ועוד פעם.",
+    "הקול שלך עושה לי שקט בראש.",
+    "יש לך אור. פשוט אור.",
+    "אני אוהב אותך לא בגלל מה שאת עושה—בגלל מי שאת."
+  ];
+
+  const deep = [
+    "אני לא מחפש מושלם. אני מחפש אמיתי. ואת אמיתית.",
+    "את שווה אהבה יציבה, בטוחה, שמכבדת אותך. ואני פה בשביל זה.",
+    "אני מעריך אותך על האופי שלך, לא פחות מהיופי שלך.",
+    "גם ביום קשה—את עדיין הדבר שאני הכי רוצה לשמור עליו."
+  ];
+
+  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+  document.getElementById("rand").onclick = () => out.textContent = "✨ " + pick(compliments);
+  document.getElementById("sweet").onclick = () => out.textContent = "🍯 " + pick(sweet);
+  document.getElementById("deep").onclick = () => out.textContent = "🫶 " + pick(deep);
+
+  // hearts
+  const card = document.getElementById("card");
+  for(let i=0;i<10;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.style.left = Math.random()*100 + "%";
+    h.style.top  = Math.random()*100 + "%";
+    h.style.transform = `rotate(45deg) scale(${0.8 + Math.random()*1.6})`;
+    card.appendChild(h);
+  }
+</script>
+</body>
+</html>
