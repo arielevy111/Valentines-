@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>משחק זיכרון 🎴</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="header">
+      <a class="btn soft" href="index.html">⬅ חזרה</a>
+      <div class="badge">משחק 2/3</div>
+    </div>
+
+    <h1>זיכרון קטן 🎴</h1>
+    <p>תמצאי את כל הזוגות. בסוף זה ישמור התקדמות.</p>
+
+    <div class="panel">
+      <div class="kpi">
+        <span>זוגות שמצאת</span>
+        <b id="score">0</b>
+      </div>
+
+      <div class="hr"></div>
+      <div class="board" id="board"></div>
+
+      <div class="hr"></div>
+      <div class="toast" id="msg"></div>
+      <div class="nav" style="margin-top:12px;">
+        <button class="btn secondary" id="restart">ערבוב מחדש</button>
+        <a class="btn primary" href="riddles.html">לחידות 🧩</a>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // English comments
+  const EMOJIS = ["💘","🌸","✨","🍓","🫶","🌙"]; // 6 pairs = 12 cards
+  let cards = [];
+  let first = null, second = null;
+  let lock = false;
+  let found = 0;
+
+  const board = document.getElementById("board");
+  const score = document.getElementById("score");
+  const msg = document.getElementById("msg");
+
+  function shuffle(a){
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+
+  function build(){
+    found=0;
+    first=null; second=null; lock=false;
+    score.textContent="0";
+    msg.textContent="";
+    board.innerHTML="";
+
+    cards = shuffle([...EMOJIS, ...EMOJIS]).map((v, idx)=>({
+      id: idx, v, open:false, matched:false
+    }));
+
+    cards.forEach(c=>{
+      const b = document.createElement("button");
+      b.className="cardBtn";
+      b.textContent = "❓";
+      b.onclick = ()=> flip(c.id);
+      b.dataset.id = c.id;
+      board.appendChild(b);
+    });
+  }
+
+  function setBtn(id, text, locked=false){
+    const btn = board.querySelector(`[data-id="${id}"]`);
+    btn.textContent = text;
+    btn.classList.toggle("locked", locked);
+  }
+
+  function flip(id){
+    if(lock) return;
+    const c = cards.find(x=>x.id===id);
+    if(c.matched || c.open) return;
+
+    c.open=true;
+    setBtn(id, c.v);
+
+    if(!first){
+      first = c;
+      return;
+    }
+    second = c;
+
+    // Check match
+    if(first.v === second.v){
+      first.matched = true;
+      second.matched = true;
+      found++;
+      score.textContent = String(found);
+      msg.textContent = "✅ יפה!";
+
+      first = null; second = null;
+
+      if(found === EMOJIS.length){
+        localStorage.setItem("val_memory_done","1");
+        msg.textContent = "סיימת את הזיכרון! ✅ ההתקדמות נשמרה. עכשיו רק חידות ונשאר הסוף הגדול 😄";
+      }
+      return;
+    }
+
+    // Not match
+    lock = true;
+    msg.textContent = "🙂 כמעט… נסי שוב";
+    setTimeout(()=>{
+      first.open=false; second.open=false;
+      setBtn(first.id, "❓");
+      setBtn(second.id,"❓");
+      first=null; second=null;
+      lock=false;
+    }, 650);
+  }
+
+  document.getElementById("restart").onclick = build;
+
+  // hearts
+  const card = document.getElementById("card");
+  for(let i=0;i<10;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.style.left = Math.random()*100 + "%";
+    h.style.top  = Math.random()*100 + "%";
+    h.style.transform = `rotate(45deg) scale(${0.8 + Math.random()*1.6})`;
+    card.appendChild(h);
+  }
+
+  build();
+</script>
+</body>
+</html>
