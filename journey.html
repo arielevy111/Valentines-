@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>המסע שלנו · פרק 1</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+</head>
+<body class="cinematic">
+  <div class="card" id="card">
+    <div class="share-toggle">
+      <button class="btn soft" id="shareToggle">Share Mode: OFF</button>
+    </div>
+
+    <div class="hero">
+      <div class="tagline">🎬 סיפור אחד · שתי נשמות</div>
+      <h1>פרק 1 — איך הכרנו</h1>
+      <p>
+        קפריסין. בית חב״ד. רגע אחד קטן שהפך לסצנה הראשונה
+        בסיפור הכי יפה שלי.
+      </p>
+      <div style="margin-top:12px;">
+        <a class="btn primary" href="index.html">⬅ חזרה ללובי</a>
+        <button class="stamp" data-stamp="chapter1">קחי חותמת ✨</button>
+      </div>
+    </div>
+
+    <div class="chapter">
+      <h2>הסצנה הראשונה — קפריסין, בית חב״ד</h2>
+      <p>
+        כאן נכניס את המשפט המדויק שלך: איך זה התחיל, איך
+        הרגשת, ומה גרם לך להבין שהיא מיוחדת.
+      </p>
+      <div class="meta">טקסט אישי: עדיין בבנייה ✍️</div>
+    </div>
+
+    <div class="chapter">
+      <h2>שלושה רגעים שחיברו אותנו</h2>
+      <div class="grid-cinema">
+        <div class="polaroid">
+          <div class="frame">🏍️</div>
+          <div class="meta">השיחה הראשונה שלנו בטרקטורון</div>
+        </div>
+        <div class="polaroid">
+          <div class="frame">💃</div>
+          <div class="meta">מועדון · לימדת אותי לרקוד</div>
+        </div>
+        <div class="polaroid">
+          <div class="frame">🎡</div>
+          <div class="meta">גלגל ענק · הסרטון הראשון</div>
+        </div>
+        <div class="polaroid private" data-private>
+          <div class="frame">🔒</div>
+          <div class="meta">סוד קטן — יופיע רק כש-Share Mode כבוי</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter private" data-private>
+      <h2>מה אני יודע עלייך</h2>
+      <p>
+        את הכי שווה בעולם. מגיע לך הכי הרבה. את יפה,
+        חכמה, והלב שלך הכי נדיר שיש.
+      </p>
+      <div class="meta">כאן נוסיף משפטים אישיים שלך, בלי להמציא.</div>
+    </div>
+
+    <div class="chapter">
+      <h2>מפתח למסע הבא</h2>
+      <p>
+        אחרי שתאספי 3 חותמות מהמסע (פרקים + משחקים),
+        ייפתח השלב הבא והחדר הסודי.
+      </p>
+      <div class="meta">המשך יבוא בפרקים הבאים...</div>
+    </div>
+  </div>
+
+<script>
+  // English comments only
+  const shareToggle = document.getElementById("shareToggle");
+  const stampButtons = document.querySelectorAll("[data-stamp]");
+  const privateBlocks = document.querySelectorAll("[data-private]");
+
+  const SHARE_KEY = "val_share_mode";
+  const STAMP_KEY = "val_stamp_chapter1";
+
+  function setShareMode(on){
+    localStorage.setItem(SHARE_KEY, on ? "1" : "0");
+    shareToggle.textContent = `Share Mode: ${on ? "ON" : "OFF"}`;
+    privateBlocks.forEach(el => {
+      el.style.display = on ? "none" : "";
+    });
+  }
+
+  function setStamp(button, collected){
+    button.classList.toggle("collected", collected);
+    button.textContent = collected ? "חותמת נשמרה ✅" : "קחי חותמת ✨";
+  }
+
+  const shareOn = localStorage.getItem(SHARE_KEY) === "1";
+  setShareMode(shareOn);
+
+  stampButtons.forEach(button => {
+    const collected = localStorage.getItem(STAMP_KEY) === "1";
+    setStamp(button, collected);
+    button.addEventListener("click", () => {
+      localStorage.setItem(STAMP_KEY, "1");
+      setStamp(button, true);
+    });
+  });
+
+  // Floating hearts
+  const card = document.getElementById("card");
+  for(let i=0;i<10;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.style.left = Math.random()*100 + "%";
+    h.style.top  = Math.random()*100 + "%";
+    h.style.transform = `rotate(45deg) scale(${0.8 + Math.random()*1.6})`;
+    card.appendChild(h);
+  }
+</script>
+</body>
+</html>
