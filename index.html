@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>הפתעה ליום האהבה 💘</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="header">
+      <div class="brand">💘 האתר של {{YOUR_NAME}}</div>
+      <div class="badge">משימה: לגרום ל-{{HER_NAME}} לחייך</div>
+    </div>
+
+    <h1>היי {{HER_NAME}} 🫶</h1>
+    <p>
+      הכנתי לך מיני־אתר קטן עם משחקים וחידות.
+      כל דף שתסיימי יפתח עוד הפתעה,
+      ובסוף יש שאלה חשובה 😄
+    </p>
+
+    <div class="grid">
+      <div class="panel col-12">
+        <div class="kpi">
+          <span>התקדמות</span>
+          <b id="progressText">0/3</b>
+        </div>
+        <div class="small" id="progressList"></div>
+        <div class="nav" style="margin-top:12px;">
+          <a class="btn soft" href="compliments.html">מחמאות מהלב 💗</a>
+          <a class="btn soft" href="quiz.html">שאלון זוגי 🧠</a>
+          <a class="btn soft" href="memory.html">משחק זיכרון 🎴</a>
+          <a class="btn soft" href="riddles.html">חידות קטנות 🧩</a>
+          <a class="btn primary" href="final.html">הסוף הגדול 🎁</a>
+        </div>
+
+        <div class="hr"></div>
+        <button class="btn secondary" id="reset">איפוס התקדמות (אם טעינו)</button>
+        <div class="note">טיפ: אם “הסוף הגדול” אומר שצריך לסיים משחקים — פשוט תחזרו ותסיימו.</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // English comments in code only
+  const KEYS = [
+    { key: "val_quiz_done",   name: "שאלון זוגי" },
+    { key: "val_memory_done", name: "זיכרון" },
+    { key: "val_riddles_done",name: "חידות" }
+  ];
+
+  function readBool(k){ return localStorage.getItem(k) === "1"; }
+
+  function renderProgress(){
+    const done = KEYS.filter(x => readBool(x.key));
+    document.getElementById("progressText").textContent = `${done.length}/3`;
+
+    const lines = KEYS.map(x => `${readBool(x.key) ? "✅" : "⬜"} ${x.name}`).join(" · ");
+    document.getElementById("progressList").textContent = lines;
+  }
+
+  document.getElementById("reset").addEventListener("click", () => {
+    if(!confirm("לאפס התקדמות?")) return;
+    KEYS.forEach(x => localStorage.removeItem(x.key));
+    renderProgress();
+  });
+
+  // floating hearts
+  const card = document.getElementById("card");
+  for(let i=0;i<12;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.style.left = Math.random()*100 + "%";
+    h.style.top  = Math.random()*100 + "%";
+    h.style.transform = `rotate(45deg) scale(${0.8 + Math.random()*1.6})`;
+    card.appendChild(h);
+  }
+
+  renderProgress();
+</script>
+</body>
+</html>
