@@ -9,35 +9,43 @@
 <body>
   <div class="card" id="card">
     <div class="header">
-      <div class="brand">💘 האתר של {{YOUR_NAME}}</div>
-      <div class="badge">משימה: לגרום ל-{{HER_NAME}} לחייך</div>
+      <div class="brand">🎬 המסע של {{YOUR_NAME}} + {{HER_NAME}}</div>
+      <div class="badge">פרויקט: חוויה קולנועית אינטראקטיבית</div>
     </div>
 
-    <h1>היי {{HER_NAME}} 🫶</h1>
+    <h1>ברוכה הבאה למסע שלנו 🫶</h1>
     <p>
-      הכנתי לך מיני־אתר קטן עם משחקים וחידות.
-      כל דף שתסיימי יפתח עוד הפתעה,
-      ובסוף יש שאלה חשובה 😄
+      זה לא אתר רגיל — זה סרט חי. כל גלילה, חידה ומשחק
+      פותחים עוד חלק מהסיפור שלנו, עד לסיום הגדול.
     </p>
 
     <div class="grid">
       <div class="panel col-12">
         <div class="kpi">
-          <span>התקדמות</span>
+          <span>מפת מפתחות</span>
           <b id="progressText">0/3</b>
         </div>
         <div class="small" id="progressList"></div>
         <div class="nav" style="margin-top:12px;">
+          <a class="btn primary" href="journey.html">פרק 1 · איך הכרנו 🎥</a>
           <a class="btn soft" href="compliments.html">מחמאות מהלב 💗</a>
           <a class="btn soft" href="quiz.html">שאלון זוגי 🧠</a>
           <a class="btn soft" href="memory.html">משחק זיכרון 🎴</a>
           <a class="btn soft" href="riddles.html">חידות קטנות 🧩</a>
-          <a class="btn primary" href="final.html">הסוף הגדול 🎁</a>
+          <a class="btn secondary" href="final.html">הסוף הגדול 🎁</a>
         </div>
 
         <div class="hr"></div>
         <button class="btn secondary" id="reset">איפוס התקדמות (אם טעינו)</button>
-        <div class="note">טיפ: אם “הסוף הגדול” אומר שצריך לסיים משחקים — פשוט תחזרו ותסיימו.</div>
+        <div class="note">טיפ: כדי לפתוח את הסוף הגדול, מסיימים לפחות 3 משימות.</div>
+      </div>
+
+      <div class="panel col-12">
+        <b>הוראות עריכה</b>
+        <div class="note" style="margin-top:6px;">
+          החליפו את {{YOUR_NAME}} ו-{{HER_NAME}} בשם שלכם,
+          ואז נכניס את הסיפור האישי צעד צעד.
+        </div>
       </div>
     </div>
   </div>
